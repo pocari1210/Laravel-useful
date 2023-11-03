@@ -1,0 +1,47 @@
+
+3-ExcelとPDFのボタンの処理
+
+★Laravel Excelインストール★
+
+インストールコマンド
+composer require maatwebsite/excel
+
+php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider" --tag=config
+
+★Laravel snappy PDFダウンロード★
+
+公式サイト
+https://github.com/barryvdh/laravel-snappy
+
+インストールコマンド
+composer require barryvdh/laravel-snappy
+
+php artisan vendor:publish --provider="Barryvdh\Snappy\ServiceProvider"
+
+wkhtmltopdfの公式ページより、ダウンロードをする必要がある
+
+wkhtmltopdfの公式ページ
+https://wkhtmltopdf.org/
+
+◆snappy(config)の編集◆
+
+ディレクトリ
+\config\snappy.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+  
+'pdf' => [
+    'enabled' => true,
+
+    // アプリケーションをインストールした直後のPathを第二引数に変更
+    'binary'  => env('WKHTML_PDF_BINARY', '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf"'),
+    'timeout' => false,
+
+    // optionsのvalueを変更する必要がある
+    'options' => array('enable-local-file-access' => true),
+    'env'     => [],
+  ],
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+

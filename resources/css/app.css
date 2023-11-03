@@ -8,3 +8,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* YajraTableのボタンの背景色を変更 */
+.dt-buttons.btn-group.flex-wrap {
+  background: black;
+}
