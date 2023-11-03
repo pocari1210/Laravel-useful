@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\DataTables\UsersDataTable;
+use App\Helpers\ImageFilter;
+use Intervention\Image\ImageManagerStatic;
 use App\Models\User;
 
 /*
@@ -42,3 +44,13 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+
+Route::get('image', function () {
+  $img = ImageManagerStatic::make('car.jpg');
+
+  $img->filter(new ImageFilter(15));
+
+  // $img->save('car1.jpg', 80);
+  return $img->response();
+});
