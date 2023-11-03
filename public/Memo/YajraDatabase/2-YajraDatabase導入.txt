@@ -1,0 +1,126 @@
+
+2-YajraDatabase導入
+
+★Yajra Boxインストール★
+
+公式サイト
+https://yajrabox.com/docs/laravel-datatables/master/installation
+
+インストールコマンド
+composer require yajra/laravel-datatables:"^9.0"
+
+Yajra Boxインストール
+
+公式サイト
+https://yajrabox.com/docs/laravel-datatables/master/installation
+
+インストールコマンド
+composer require yajra/laravel-datatables:"^9.0"
+
+npm i laravel-datatables-vite --save-dev
+
+◆app.jsの編集◆
+
+ディレクトリ
+\resources\js\app.js
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+import 'laravel-datatables-vite';
+
+★コード解説★
+モジュールのimportを行う
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+◆app.cssの編集◆
+
+ディレクトリ
+\resources\css\app.css
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import "datatables.net-bs5/css/dataTables.bootstrap5.min.css";
+@import "datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css";
+@import 'datatables.net-select-bs5/css/select.bootstrap5.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+★コード解説★
+モジュールのimportを行う
+
+※注意事項※
+@tailwindの上に記述を行う
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+◆DataTablesの編集◆
+
+ディレクトリ
+\app\DataTables\UsersDataTable.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+  public function getColumns(): array
+  {
+    return [
+      Column::computed('action')
+        ->exportable(false)
+        ->printable(false)
+        ->width(60)
+        ->addClass('text-center'),
+
+      // 列名を指定(Userテーブルのカラムと合わせる)
+      // カラム名が一致していないとエラーが出る
+      Column::make('id'),
+      Column::make('name'),
+      Column::make('email'),
+      Column::make('created_at'),
+      Column::make('updated_at'),
+
+    ];
+  }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+◆ルートの編集◆
+
+ディレクトリ
+\routes\web.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+//第一引数で\app\DataTablesで作成したファイル名、第二引数で変数名を記述
+Route::get('/dashboard', function (UsersDataTable $dataTable) {
+
+  // ★YajraDBを使用する場合のreturnの処理★
+  // renderの中にview名を記述する
+  return $dataTable->render('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+◆ビューの編集◆
+
+ディレクトリ
+\resources\views\dashboard.blade.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+  <!-- ★YajraDBを用いる場合のコード★-->
+  {{ $dataTable->table() }}
+
+  <!-- $dataTableをロードしている -->
+  {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+ここまで完了したら下記コマンドを実行
+npm run dev
+
