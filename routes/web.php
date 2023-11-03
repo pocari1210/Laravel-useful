@@ -20,6 +20,11 @@ Route::get('/', function () {
   return view('welcome');
 });
 
+
+Route::get('user/{id}/edit', function ($id) {
+  return $id;
+})->name('user.edit');
+
 Route::get('/dashboard', function (UsersDataTable $dataTable) {
   // $users = User::all();
   // $users = User::paginate(10);
