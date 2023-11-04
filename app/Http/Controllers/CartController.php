@@ -40,4 +40,35 @@ class CartController extends Controller
 
     return redirect()->back()->with('success', 'Product is added into the cart!');
   }
+
+  public function qtyIncrement($rowId)
+  {
+
+    // rowIdを取得したデータを変数$productに格納
+    $product = Cart::get($rowId);
+
+    // qty(数量)を1つたしたデータを$updateQty格納
+    $updateQty = $product->qty + 1;
+
+    // 第一引数でrowId、第二引数で、数量を増分した変数($updateQty)を指定
+    Cart::update($rowId, $updateQty);
+
+    return redirect()->back()->with('success', 'Product increment succesfully!');
+  }
+  public function qtyDecrement($rowId)
+  {
+
+    // rowIdを取得したデータを変数$productに格納
+    $product = Cart::get($rowId);
+
+    // qty(数量)を1つひいたデータを$updateQty格納    
+    $updateQty = $product->qty - 1;
+
+    // $updateQtyが0より大きい場合、減算処理を実行させる
+    if ($updateQty > 0) {
+      Cart::update($rowId, $updateQty);
+    }
+
+    return redirect()->back()->with('success', 'Product decrement succesfully!');
+  }
 }

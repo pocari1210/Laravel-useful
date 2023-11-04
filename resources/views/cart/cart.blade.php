@@ -54,7 +54,7 @@
                     <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                       <!-- Quantity -->
                       <div class="d-flex mb-4" style="max-width: 300px">
-                        <a href="" class="btn btn-primary me-2">
+                        <a href="{{route('qty-decrement', $product->rowId)}}" class="btn btn-primary me-2">
                           &#8722;
                         </a>
 
@@ -62,7 +62,7 @@
                           <input id="form1" min="0" name="quantity" value="{{$product->qty}}" type="number" class="form-control" />
                         </div>
 
-                        <a href="" class="btn btn-primary  ms-2">
+                        <a href="{{route('qty-increment', $product->rowId)}}" class="btn btn-primary  ms-2">
                           &#43;
                         </a>
                       </div>
