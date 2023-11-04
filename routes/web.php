@@ -62,3 +62,7 @@ Route::get('shop', [CartController::class, 'shop'])
 
 Route::get('cart', [CartController::class, 'cart'])
   ->name('cart');
+
+// productをCartに追加するルート
+Route::get('add-to-cart/{product_id}', [CartController::class, 'addToCart'])
+  ->name('add-to-cart');

@@ -9,6 +9,8 @@
 
   <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+      <!-- ★フラッシュメッセージの表示★ -->
       @if ($message = Session::get('success'))
       <div class="alert alert-success alert-block">
         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -24,7 +26,7 @@
               <h1 class="card-title" style="font-size: 20px;">{{$product->name}}</h1>
               <h1 class="card-title text-primary" style="font-size: 20px;">${{$product->price}}</h1>
               <p class="card-text">{{$product->description}}</p>
-              <a href="#" class="btn btn-danger mt-3">Add to Cart</a>
+              <a href="{{route('add-to-cart', $product->id)}}" class="btn btn-danger mt-3">Add to Cart</a>
             </div>
           </div>
         </div>

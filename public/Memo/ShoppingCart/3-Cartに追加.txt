@@ -1,0 +1,72 @@
+
+3-Cartに追加
+
+◆ルートの編集◆
+
+ディレクトリ
+\routes\web.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+// productをCartに追加するルート
+Route::get('add-to-cart/{product_id}', [CartController::class, 'addToCart'])
+  ->name('add-to-cart');
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+◆ビューの編集(遷移元)◆
+
+ディレクトリ
+\resources\views\cart\shop.blade.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+  <div class="card-body">
+    <h1 class="card-title" style="font-size: 20px;">{{$product->name}}</h1>
+    <h1 class="card-title text-primary" style="font-size: 20px;">${{$product->price}}</h1>
+    <p class="card-text">{{$product->description}}</p>
+
+    ↓↓ルートの追記↓↓
+    <a href="{{route('add-to-cart', $product->id)}}" class="btn btn-danger mt-3">Add to Cart</a>
+  </div>
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+◆コントローラーの編集◆
+
+ディレクトリ
+\app\Http\Controllers\CartController.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+use Gloudemans\Shoppingcart\Facades\Cart;
+
+  public function addToCart($product_id)
+  {
+    $product = Product::findOrFail($product_id);
+
+    // dd($product);
+
+    Cart::add([
+      'id' => $product->id,
+      'name' => $product->name,
+      'qty' => 1,
+      'price' => $product->price,
+      'weight' => 0,
+
+      // optionsキーは、任意の物を記述できる
+      'options' => [
+        'image' => $product->image
+      ]
+    ]);
+
+    return redirect()->back()->with('success', 'Product is added into the cart!');
+  }
+
+
+★コード解説★
+デバッグバーのsessionタブでカートにいれたデータを確認できる
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
