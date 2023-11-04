@@ -6,6 +6,7 @@ use App\DataTables\UsersDataTable;
 use App\Helpers\ImageFilter;
 use Intervention\Image\ImageManagerStatic;
 use App\Models\User;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,3 +55,10 @@ Route::get('image', function () {
   // $img->save('car1.jpg', 80);
   return $img->response();
 });
+
+
+Route::get('shop', [CartController::class, 'shop'])
+  ->name('shop');
+
+Route::get('cart', [CartController::class, 'cart'])
+  ->name('cart');
