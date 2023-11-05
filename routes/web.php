@@ -73,3 +73,6 @@ Route::get('qty-increment/{rowId}', [CartController::class, 'qtyIncrement'])
 
 Route::get('qty-decrement/{rowId}', [CartController::class, 'qtyDecrement'])
   ->name('qty-decrement');
+
+Route::get('remove-product/{rowId}', [CartController::class, 'removeProduct'])
+  ->name('remove-product');

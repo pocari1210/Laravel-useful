@@ -71,4 +71,11 @@ class CartController extends Controller
 
     return redirect()->back()->with('success', 'Product decrement succesfully!');
   }
+
+  public function removeProduct($rowId)
+  {
+    Cart::remove($rowId);
+
+    return redirect()->back();
+  }
 }
