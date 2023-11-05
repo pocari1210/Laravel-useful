@@ -1,0 +1,36 @@
+
+公式サイト
+https://laravel.com/docs/9.x/socialite#main-content
+
+インストールコマンド
+composer require laravel/socialite
+
+◆configの編集◆
+
+ディレクトリ
+\config\services.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+  'github' => [
+    'client_id' => env('GITHUB_CLIENT_ID'),
+    'client_secret' => env('GITHUB_CLIENT_SECRET'),
+    'redirect' => env('GITHUB_REDIRECT_URL'),
+  ],
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+◆.envの編集◆
+
+ディレクトリ
+.env
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+GITHUB_CLIENT_ID=3f9e82759f14c37959af
+GITHUB_CLIENT_SECRET=c61b7245db1292b059a1450e0f1138836d63ce12
+GITHUB_REDIRECT_URL=http://127.0.0.1:8000/auth/callback
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
