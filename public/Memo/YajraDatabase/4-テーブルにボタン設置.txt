@@ -1,0 +1,37 @@
+
+4-テーブルにボタン設置
+
+◆ルートの編集◆
+
+ディレクトリ
+\routes\web.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+Route::get('user/{id}/edit', function ($id) {
+  return $id;
+})->name('user.edit');
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+◆UsersDataTableの編集◆
+
+ディレクトリ
+\app\DataTables\UsersDataTable.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+  public function dataTable(QueryBuilder $query): EloquentDataTable
+  {
+    return (new EloquentDataTable($query))
+      // ->addColumn('action', 'users.action')
+
+      ->addColumn('action', function ($query) {
+        return '<a href="' . route('user.edit', $query->id) . '" class="btn btn-primary">Edit</a><a href="" class="btn btn-danger">Delete</a>';
+      })
+      ->addColumn('demo', function ($query) {
+        return 'demo';
+      })
+
+/////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,86 @@
+
+5-pty(数量)の変更
+
+◆ルートの編集◆
+
+ディレクトリ
+\routes\web.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+Route::get('qty-increment/{rowId}', [CartController::class, 'qtyIncrement'])
+  ->name('qty-increment');
+
+Route::get('qty-decrement/{rowId}', [CartController::class, 'qtyDecrement'])
+  ->name('qty-decrement');
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+◆ビューの編集(遷移元)◆
+
+ディレクトリ
+\resources\views\cart\cart.blade.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+  <!-- Quantity -->
+  <div class="d-flex mb-4" style="max-width: 300px">
+
+    ↓↓ルートの追加↓↓
+    <a href="{{route('qty-decrement', $product->rowId)}}" class="btn btn-primary me-2">
+      &#8722;
+    </a>
+
+    <div class="form-outline">
+      <input id="form1" min="0" name="quantity" value="{{$product->qty}}" type="number" class="form-control" />
+    </div>
+
+    ↓↓ルートの追加↓↓
+    <a href="{{route('qty-increment', $product->rowId)}}" class="btn btn-primary  ms-2">
+      &#43;
+    </a>
+  </div>
+  <!-- Quantity -->
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+◆コントローラーの編集◆
+
+ディレクトリ
+\app\Http\Controllers\CartController.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+  public function qtyIncrement($rowId)
+  {
+
+    // rowIdを取得したデータを変数$productに格納
+    $product = Cart::get($rowId);
+
+    // qty(数量)を1つたしたデータを$updateQty格納
+    $updateQty = $product->qty + 1;
+
+    // 第一引数でrowId、第二引数で、数量を増分した変数($updateQty)を指定
+    Cart::update($rowId, $updateQty);
+
+    return redirect()->back()->with('success', 'Product increment succesfully!');
+  }
+  public function qtyDecrement($rowId)
+  {
+
+    // rowIdを取得したデータを変数$productに格納
+    $product = Cart::get($rowId);
+
+    // qty(数量)を1つひいたデータを$updateQty格納    
+    $updateQty = $product->qty - 1;
+
+    // $updateQtyが0より大きい場合、減算処理を実行させる
+    if ($updateQty > 0) {
+      Cart::update($rowId, $updateQty);
+    }
+
+    return redirect()->back()->with('success', 'Product decrement succesfully!');
+  }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////

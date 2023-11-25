@@ -1,0 +1,12 @@
+
+2-shoppingcartライブラリインストール
+
+公式サイト
+https://packagist.org/packages/bumbummen99/shoppingcart
+
+インストールコマンド
+composer require bumbummen99/shoppingcart
+
+config作成コマンド
+php artisan vendor:publish --provider="Gloudemans\Shoppingcart\ShoppingcartServiceProvider" --tag="config"
+

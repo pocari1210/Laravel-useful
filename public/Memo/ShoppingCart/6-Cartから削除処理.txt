@@ -1,0 +1,48 @@
+
+6-Cartから削除処理
+
+◆ルートの編集◆
+
+ディレクトリ
+\routes\web.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+Route::get('remove-product/{rowId}', [CartController::class, 'removeProduct'])
+  ->name('remove-product');
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+◆ビューの編集(遷移元)◆
+
+ディレクトリ
+\resources\views\cart\cart.blade.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+  <a href="{{route('remove-product', $product->rowId)}}" class="btn btn-danger btn-sm mb-2 mt-3">
+    remove
+  </a>
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+◆コントローラーの編集◆
+
+ディレクトリ
+\app\Http\Controllers\CartController.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+  public function removeProduct($rowId)
+  {
+    Cart::remove($rowId);
+
+    return redirect()->back();
+  }
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////

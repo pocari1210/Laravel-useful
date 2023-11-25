@@ -1,0 +1,46 @@
+
+
+
+◆ルートの編集◆
+
+ディレクトリ
+\routes\web.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+// リダイレクトURLのルート
+Route::get('/auth/redirect', function () {
+  return Socialite::driver('github')->redirect();
+})->name('github.login');
+
+Route::get('/auth/callback', function () {
+  $user = Socialite::driver('github')->user();
+
+  $user = User::firstOrCreate([
+    'email' => $user->email
+  ], [
+    'name' => $user->name,
+    'password' => bcrypt(Str::random(24))
+  ]);
+
+  Auth::login($user, true);
+
+  return redirect('/dashboard');
+});
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+◆ビューの編集(遷移元)◆
+
+ディレクトリ
+\resources\views\auth\login.blade.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+      <a href="{{route('github.login')}}" class="inline-flex items-center ml-2 px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+        {{ __('GitHub login') }}
+      </a>
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+

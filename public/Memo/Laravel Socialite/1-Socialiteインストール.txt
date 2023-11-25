@@ -1,0 +1,42 @@
+
+公式サイト
+https://laravel.com/docs/9.x/socialite#main-content
+
+インストールコマンド
+composer require laravel/socialite
+
+◆configの編集◆
+
+ディレクトリ
+\config\services.php
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+  'github' => [
+    'client_id' => env('GITHUB_CLIENT_ID'),
+    'client_secret' => env('GITHUB_CLIENT_SECRET'),
+    'redirect' => env('GITHUB_REDIRECT_URL'),
+  ],
+
+.envのデータを読み込んでいる
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+◆.envの編集◆
+
+ディレクトリ
+.env
+
+・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・
+
+GITHUB_CLIENT_ID=0b3a60d291b9bf156915
+GITHUB_CLIENT_SECRET=b728631dc9fca073014de614a171a5cb5c283fc6
+GITHUB_REDIRECT_URL=http://127.0.0.1:8000/auth/callback
+
+Githubにログインし、
+右側サイドバー⇒settings⇒ Developer settings⇒OAuth Apps
+と進み、New Oauth Appボタンから作成を行う
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
